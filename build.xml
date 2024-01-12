@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="TradeDataServices" default="build">
+    <property name="source" value="${project.basedir}/src/TradeDataServices" />
+    <property name="phpcs.reportsdir" value="${project.basedir}/reports/phpcs" />
+    <property name="phpmd.reportsdir" value="${project.basedir}/reports/phpmd" />
+    <property name="coverage.reportsdir" value="${project.basedir}/reports/coverage" />
+    <property name="acceptance.reportsdir" value="${project.basedir}/reports/acceptance" />
+
+    <target name="build" depends="main" hidden="true" />
+
+    <!-- ============================================  -->
+    <!-- Target: Main PHPCS target                     -->
+    <!-- ============================================  -->
+    <target name="main" hidden="true">
+        <phingcall target="emptyreports" />
+        <phingcall target="phpspec" />
+        <phingcall target="phpcbf" />
+        <phingcall target="phpcs" />
+        <phingcall target="phpmd" />
+        <phingcall target="acceptance" />
+    </target>
+
+    <!-- ============================================  -->
+    <!-- Target: Empty Reports Folders                 -->
+    <!-- ============================================  -->
+    <target name="emptyreports" description="Empty Reports Folder">
+        <delete dir="${phpcs.reportsdir}" />
+        <delete dir="${phpmd.reportsdir}" />
+        <delete dir="${coverage.reportsdir}" />
+        <delete dir="${acceptance.reportsdir}" />
+        <mkdir dir="${phpcs.reportsdir}" />
+        <mkdir dir="${phpmd.reportsdir}" />
+        <mkdir dir="${coverage.reportsdir}" />
+        <mkdir dir="${acceptance.reportsdir}" />
+
+    </target>
+
+    <!-- ============================================  -->
+    <!-- Target: PHPCBF                                -->
+    <!-- ============================================  -->
+    <target name="phpcbf" description="PHP Code Beautifier">
+        <php expression="ini_set('memory_limit', '2G');" />
+        <exec
+            logoutput="false"
+            checkreturn="false"
+            passthru="false"
+            command="php ${project.basedir}/bin/phpcbf --standard=PSR2 ${source}"
+            dir="${source}"
+        />
+    </target>
+
+    <!-- ============================================  -->
+    <!-- Target: PHPCS                                 -->
+    <!-- ============================================  -->
+    <target name="phpcs" description="Check for coding standard violations">
+        <php expression="ini_set('memory_limit', '2G');" />
+        <phpcodesniffer
+            ignorePatterns="*/test*,*/storage/*"
+            skipversioncheck="true"
+            standard="PSR2"
+            haltonerror="true"
+            haltonwarning="true"
+        >
+            <fileset dir="${source}">
+                <include name="**/*.php"/>
+            </fileset>
+            <formatter type="full" outfile="${phpcs.reportsdir}/report.txt" />
+        </phpcodesniffer>
+    </target>
+
+    <!-- ============================================  -->
+    <!-- Target: PHPMD                                 -->
+    <!-- ============================================  -->
+    <target name="phpmd" description="Detect clean code violations">
+        <php expression="ini_set('memory_limit', '2G');" />
+        <exec
+            logoutput="true"
+            checkreturn="true"
+            passthru="false"
+            command="php ${project.basedir}/bin/phpmd ${source} html ${project.basedir}/phpmd.xml --reportfile ${phpmd.reportsdir}/index.html"
+            dir="${source}"
+        />
+    </target>
+
+    <!-- ============================================  -->
+    <!-- Target: PhpSpec                               -->
+    <!-- ============================================  -->
+    <target name="phpspec" description="Check php code for syntax errors">
+        <php expression="date_default_timezone_set('Asia/Manila');" />
+        <php expression="ini_set('memory_limit', '2G');" />
+        <exec
+            logoutput="true"
+            checkreturn="true"
+            passthru="false"
+            command="php ${project.basedir}/bin/phpspec run --config ${project.basedir}/phpspec.codecoverage.yml --no-ansi --format dot"
+        />
+    </target>
+
+
+    <!-- ============================================  -->
+    <!-- Target: Behat                               -->
+    <!-- ============================================  -->
+    <target name="acceptance" description="Testing Acceptance Test">
+        <php expression="ini_set('memory_limit', '2G');" />
+        <exec
+            logoutput="true"
+            checkreturn="true"
+            passthru="false"
+            command="php ${project.basedir}/bin/behat --format=progress"
+        />
+    </target>
+</project>

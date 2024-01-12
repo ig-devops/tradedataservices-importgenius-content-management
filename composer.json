@@ -1,0 +1,41 @@
+{
+    "name": "tradedataservices/importgenius-content-management",
+    "description": "Import Genius Sales Content Management Package",
+    "type": "git",
+    "authors": [
+        {
+            "name": "ImportGenius Developers",
+            "email": "dev@importgenius.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=5.6.0",
+        "tradedataservices/common" : "1.0.*@stable"
+    },
+    "require-dev": {
+        "phpspec/phpspec": "3.1.*@stable",
+        "henrikbjorn/phpspec-code-coverage": "3.0.*@stable",
+        "squizlabs/php_codesniffer": "2.7.*@stable",
+        "phpmd/phpmd": "2.6.*@stable",
+        "phing/phing": "2.16.*@stable",
+        "behat/behat": "3.3.*@stable",
+        "fzaninotto/faker": "1.6.*@stable",
+        "phpunit/phpunit": "5.4.*@stable",
+        "bossa/phpspec2-expect": "2.1.*@stable"
+    },
+    "autoload": {
+        "psr-0": {
+            "": ["src"]
+        }
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "repositories": [
+        {
+            "url": "git@gitlab.com:importgenius/TradeDataServices-Common.git",
+            "type": "git"
+        }
+    ]
+}

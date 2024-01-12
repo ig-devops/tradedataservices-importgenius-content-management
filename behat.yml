@@ -1,0 +1,9 @@
+# behat.yml
+default:
+    suites:
+        landing_page_removal:
+            paths:    [ %paths.base%/features/LandingPageRemovalTool ]
+            contexts: [ FeatureContext, LandingPageRemovalToolFeature ]
+        landing_page_mark_as_private:
+            paths:    [ %paths.base%/features/LandingPageMarkAsPrivate ]
+            contexts: [ FeatureContext, LandingPageMarkAsPrivateFeature ]

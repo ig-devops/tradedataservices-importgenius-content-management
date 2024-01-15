@@ -11,7 +11,7 @@
     "minimum-stability": "stable",
     "require": {
         "php": ">=5.6.0",
-        "tradedataservices/common" : "1.0.*@stable"
+        "tradedataservices/importgenius-common": "1.0.*@stable"
     },
     "require-dev": {
         "phpspec/phpspec": "3.1.*@stable",
@@ -34,7 +34,7 @@
     },
     "repositories": [
         {
-            "url": "git@gitlab.com:importgenius/TradeDataServices-Common.git",
+            "url": "https://github.com/ig-devops/tradedataservices-importgenius-common",
             "type": "git"
         }
     ]

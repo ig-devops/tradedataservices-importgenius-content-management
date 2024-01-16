@@ -34,7 +34,7 @@
     },
     "repositories": [
         {
-            "url": "https://github.com/ig-devops/tradedataservices-importgenius-common",
+            "url": "https://github.com/ig-devops/tradedataservices-importgenius-common.git",
             "type": "git"
         }
     ]
